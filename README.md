@@ -89,12 +89,12 @@ For an instant trial, select data/radiologist_profiles.csv and data/shift_data_s
 ⸻
 
 ## 4 Operating the application
-	1.	Step 1 — Upload input files
+### 1.	Step 1 — Upload input files
 		Scheduling CSV (columns Date, Shift with values L1/L2/L3) and Radiologist profile CSV (columns Radiologist_ID, Notes).
 		Click Create Schedule to generate the initial calendar.
-	2.	Moonlighting export (optional)
+### 2.	Moonlighting export (optional)
 		If any shifts remain uncovered, a Moonlighting Shifts Export button appears; click to download a CSV of open slots.
-	3.	Step 2 — Submit additional notes
+### 3.	Step 2 — Submit additional notes
 		Enter the requestor’s name, type a free-text note, and press Submit.
 		Examples:
 			•	“I can only cover July 15 L2 and L3.”
