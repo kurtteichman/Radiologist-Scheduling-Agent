@@ -125,14 +125,13 @@ After submission, the calendar, legend, and all underlying data structures refre
 
 ## 6 Dependencies
 
-The project targets Python 3.9 + and relies on the following core packages (see requirements.txt for exact versions):
+The project targets Python 3.9 + and relies on the following core packages:
 
-Package	Purpose
-openai	Access to GPT models for parsing tasks
-google-ortools	CP-SAT optimiser
-streamlit	Web UI framework
-pandas	CSV processing
-python-dotenv (optional)	Local .env management for OPENAI_API_KEY
-pytest / unittest	Test execution (used by the scripts in tests/)
-
-Install them collectively via pip install -r requirements.txt as shown earlier.
+| Package         | Purpose                                              |
+|----------------|------------------------------------------------------|
+| `openai`        | Access to GPT models for parsing tasks              |
+| `google-ortools`| CP-SAT optimiser                                    |
+| `streamlit`     | Web UI framework                                    |
+| `pandas`        | CSV processing                                      |
+| `python-dotenv` | Local `.env` management for `OPENAI_API_KEY` (optional) |
+| `pytest` / `unittest` | Test execution (used by the scripts in `tests/`)   |
