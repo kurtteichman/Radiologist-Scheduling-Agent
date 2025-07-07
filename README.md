@@ -103,12 +103,15 @@ Click Create Schedule to generate the initial calendar.
 ### 2.	Moonlighting export (optional)
 If any shifts remain uncovered, a Moonlighting Shifts Export button appears; click to download a CSV of open slots.
 ### 3.	Step 2 — Submit additional notes
-Enter the requestor’s name, type a free-text note, and press Submit.
-Examples:
-	•	“I can only cover July 15 L2 and L3.”
-	•	“Please swap my August 3 L1 shift with Alice.”
-	•	“My maximum for this month is three shifts.”
-The calendar, legend, and underlying data structures refresh automatically.
+Enter the requestor’s name, type a free-text note, and press **Submit**.
+
+**Examples**
+
+- “I can only cover **July 15 L2** and **L3**.”
+- “Please swap my **August 3 L1** shift with **Alice**.”
+- “My maximum for this month is **three shifts**.”
+
+After submission, the calendar, legend, and all underlying data structures refresh automatically.
 
 ⸻
 
