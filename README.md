@@ -7,25 +7,25 @@ Two core components underpin the system:
 
 ⸻
 
-## 1 Repository structure
+## 1 Repository structure
 
+```text
 Radiologist-Scheduling-Agent/
-│
-├─ home.py                          ← Streamlit user interface (application entry point)
+├─ home.py                          ← Streamlit user interface (entry point)
 │
 ├─ utils/
 │   ├─ parse/
 │   │   ├─ __init__.py
-│   │   ├─ parse_AI.py              ← LLM-driven parsers (availability, requests, etc.)
+│   │   ├─ parse_AI.py              ← LLM-driven parsers
 │   │   ├─ parse_non_AI.py          ← CSV helpers
-│   │   └─ parse_requests.py        ← Orchestrates agents and scheduling logic
+│   │   └─ parse_requests.py        ← Orchestrates agents + scheduling logic
 │   │
 │   ├─ schedule/
 │   │   ├─ __init__.py
-│   │   ├─ alterations.py           ← Post-processing mutators for manual edits
-│   │   ├─ objective.py             ← Objective-function builder and weights
+│   │   ├─ alterations.py           ← Post-processing mutators
+│   │   ├─ objective.py             ← Objective-function builder
 │   │   ├─ scheduler.py             ← CP-SAT model generator
-│   │   └─ variables.py             ← Helper functions for decision variables
+│   │   └─ variables.py             ← Decision-variable helpers
 │   │
 │   └─ __init__.py
 │
@@ -34,7 +34,7 @@ Radiologist-Scheduling-Agent/
 │   ├─ schedule-test.py
 │   └─ test_alterations.py
 │
-├─ data/                            ← Example datasets for quick trial / stress testing
+├─ data/
 │   ├─ radiologist_profiles.csv
 │   └─ shift_data_single_month.csv
 │
