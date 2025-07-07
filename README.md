@@ -54,10 +54,16 @@ Radiologist-Scheduling-Agent/
 | **Post-edit processing** | `utils/schedule/alterations.py` | Applies direct edits immediately; if no edits are specified, triggers a complete re-optimisation. |
 | **Presentation layer** | `home.py` | Renders the calendar and colour legend; uncovered shifts can be exported for “moonlighting” coverage. |
 
-Error-handling safeguards
-	•	Each LLM extractor retries up to three attempts before raising a ValueError.
-	•	Unknown radiologists referenced in a note are added automatically with a default monthly cap (five shifts) and full availability
-		unless otherwise specified.
+<details>
+<summary><strong>Error-handling safeguards</strong></summary>
+
+- **Three-retry policy** – every LLM extractor attempts the prompt up to **three times** before propagating a `ValueError`.
+- **Auto-provisioning of unknown radiologists** – when a note mentions a radiologist not yet in the data set, the system automatically  
+  inserts that name with:
+  - a default monthly cap of **five shifts**, and  
+  - full availability (all shifts set to `1`),  
+  unless the note explicitly states otherwise.
+</details>
 
 ⸻
 
