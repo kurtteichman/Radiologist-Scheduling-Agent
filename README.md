@@ -116,10 +116,10 @@ After submission, the calendar, legend, and all underlying data structures refre
 ⸻
 
 ## 5 Customisation guidelines
-	•	Objective weights — adjust utils/schedule/objective.py.
-	•	Additional hard constraints — add model.Add(...) statements in scheduler.py.
-	•	Model selection — each Agent sets its OpenAI model via the model= argument (default gpt-4o).
-	•	Logging — console output highlights discarded agent data and auto-generated defaults.
+- **Objective weights** – adjust values in `utils/schedule/objective.py`.
+- **Additional hard constraints** – add `model.Add(...)` statements in `utils/schedule/scheduler.py`.
+- **Model selection** – each `Agent` defines its OpenAI model via the `model=` argument (default **gpt-4o**).
+- **Logging** – console output highlights discarded agent data and any auto-generated defaults.
 
 ⸻
 
