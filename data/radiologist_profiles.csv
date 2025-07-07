@@ -1,0 +1,9 @@
+Radiologist_ID,Availability_Constraint,Notes,Maximum_Shifts_Per_Month
+Radiologist A,Weekday Only,"Cannot cover Friday, Saturday, or Sunday shifts. Requesting July 12, L1.",10
+Radiologist B,Weekday Only,"Cannot cover Friday, Saturday, or Sunday shifts.",12
+Radiologist C,Weekday + Sunday,"Cannot cover Friday or Saturday shifts. Unavailable on July 7. Requesting July 5.",8
+Radiologist D,Weekday + Sunday,"Cannot cover Friday or Saturday shifts.",14
+Radiologist E,Any Shift,"Can cover any weekday or weekend shift. Requesting 7/15, L2",7
+Radiologist F,Any Shift,"Can cover any weekday or weekend shift. Unavailable on July 1.",10
+Radiologist G,Any Shift,"Can cover any weekday or weekend shift. Unavailable for July 2 L1 and L2.",16
+Radiologist H,Any Shift,"Can cover any weekday or weekend shift. Requesting 7/23, any shift.",5
