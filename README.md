@@ -1,4 +1,4 @@
-Radiologist-Scheduling-Agent
+# Radiologist-Scheduling-Agent
 
 A web application that converts free-form natural-language notes from radiologists into a balanced on-call rota.
 Two core components underpin the system:
@@ -7,7 +7,7 @@ Two core components underpin the system:
 
 ⸻
 
-1 Repository structure
+## 1 Repository structure
 
 Radiologist-Scheduling-Agent/
 │
@@ -43,7 +43,7 @@ Radiologist-Scheduling-Agent/
 
 ⸻
 
-2 System overview
+## 2 System overview
 
 Stage	Principal modules	Summary
 Data ingestion	home.py	User uploads two CSV files: (i) shift template and (ii) radiologist profiles.
@@ -59,9 +59,9 @@ Error-handling safeguards
 
 ⸻
 
-3 Installation and execution
+## 3 Installation and execution
 
-3.1 Environment setup
+### 3.1 Environment setup
 
 git clone https://github.com/<your-user>/Radiologist-Scheduling-Agent.git
 cd Radiologist-Scheduling-Agent
@@ -72,13 +72,13 @@ source .venv/bin/activate
 pip install -r requirements.txt      # OR-Tools, Streamlit, pandas, openai, …
 export OPENAI_API_KEY=<your-key>
 
-3.2 Running the automated tests
+### 3.2 Running the automated tests
 
 python3 -m tests.test_parse_requests
 python3 -m tests.schedule-test
 python3 -m tests.test_alterations
 
-3.3 Starting the application
+### 3.3 Starting the application
 
 streamlit run ./home.py
 
@@ -88,7 +88,7 @@ For an instant trial, select data/radiologist_profiles.csv and data/shift_data_s
 
 ⸻
 
-4 Operating the application
+## 4 Operating the application
 	1.	Step 1 — Upload input files
 Scheduling CSV (columns Date, Shift with values L1/L2/L3) and Radiologist profile CSV (columns Radiologist_ID, Notes).
 Click Create Schedule to generate the initial calendar.
@@ -104,7 +104,7 @@ The calendar, legend, and underlying data structures refresh automatically.
 
 ⸻
 
-5 Customisation guidelines
+## 5 Customisation guidelines
 	•	Objective weights — adjust utils/schedule/objective.py.
 	•	Additional hard constraints — add model.Add(...) statements in scheduler.py.
 	•	Model selection — each Agent sets its OpenAI model via the model= argument (default gpt-4o).
@@ -112,7 +112,7 @@ The calendar, legend, and underlying data structures refresh automatically.
 
 ⸻
 
-6 Dependencies
+## 6 Dependencies
 
 The project targets Python 3.9 + and relies on the following core packages (see requirements.txt for exact versions):
 
@@ -125,7 +125,3 @@ python-dotenv (optional)	Local .env management for OPENAI_API_KEY
 pytest / unittest	Test execution (used by the scripts in tests/)
 
 Install them collectively via pip install -r requirements.txt as shown earlier.
-
-⸻
-
-This concludes the formal project documentation.
