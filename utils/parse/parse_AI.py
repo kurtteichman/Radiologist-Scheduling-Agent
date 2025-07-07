@@ -48,35 +48,39 @@ Only respond with a list. Do not explain anything.
 )
 
 def extract_list_from_output(output_str):
-    try:
-        result = json.loads(output_str)
-    except json.JSONDecodeError:
+    for attempt in range(3):
         try:
-            result = ast.literal_eval(output_str)
-        except Exception:
-            raise ValueError(f"Invalid format: {output_str}")
-    if isinstance(result, list) and all(x in [0, 1] for x in result):
-        return result
-    raise ValueError(f"Expected list of 0s and 1s. Got: {output_str}")
+            result = json.loads(output_str)
+        except json.JSONDecodeError:
+            try:
+                result = ast.literal_eval(output_str)
+            except Exception:
+                if attempt == 2:
+                    raise ValueError(f"Invalid format: {output_str}")
+                continue
+        if isinstance(result, list) and all(x in [0, 1] for x in result):
+            return result
+        if attempt == 2:
+            raise ValueError(f"Expected list of 0s and 1s. Got: {output_str}")
+
 
 def extract_json_from_output(output_str):
-    import ast
+    for attempt in range(3):
+        cleaned_output = output_str
+        if cleaned_output.strip().startswith("```"):
+            cleaned_output = "\n".join(
+                line for line in cleaned_output.strip().splitlines()
+                if not line.strip().startswith("```")
+            )
 
-    # Remove Markdown-style ``` wrappers if present
-    if output_str.strip().startswith("```"):
-        output_str = "\n".join(
-            line for line in output_str.strip().splitlines()
-            if not line.strip().startswith("```")
-        )
-
-    try:
-        return json.loads(output_str)
-    except json.JSONDecodeError:
         try:
-            return ast.literal_eval(output_str)
-        except Exception:
-            raise ValueError(f"Invalid format: {output_str}")
-    raise ValueError(f"Expected valid JSON. Got: {output_str}")
+            return json.loads(cleaned_output)
+        except json.JSONDecodeError:
+            try:
+                return ast.literal_eval(cleaned_output)
+            except Exception:
+                if attempt == 2:
+                    raise ValueError(f"Invalid format: {output_str}")
 
 async def extract_availability_chunk(note, chunk_start, chunk_end):
     date_list = [
@@ -118,10 +122,13 @@ Here are all possible shifts:
 Which shifts has the employee explicitly requested?
 """
     runner = Runner()
-    result = await runner.run(request_extraction_agent, input_text)
-    parsed = extract_json_from_output(result.final_output)
-
-    return parsed  # list of dicts
+    for attempt in range(3):
+        result = await runner.run(request_extraction_agent, input_text)
+        try:
+            return extract_json_from_output(result.final_output)
+        except ValueError:
+            if attempt == 2:
+                raise
 
 async def extract_availability_matrix(radiologist_df, start_date, end_date):
     availability_matrix = []
@@ -136,24 +143,25 @@ async def extract_availability_matrix(radiologist_df, start_date, end_date):
         note = radiologist_df["Notes"].iloc[i]
 
         # Parse availability in 9-shift chunks (i.e., 3-day chunks)
-        full_list = []
         total_days = (end_date - start_date).days + 1
-        total_shifts = total_days * 3  # 3 shifts per day
-        chunk_size_days = 3  # 3 days * 3 shifts = 9 shifts
+        total_shifts = total_days * 3
+        chunk_size_days = 3
 
-        for chunk_start_day in range(0, total_days, chunk_size_days):
-            cs = start_date + timedelta(days=chunk_start_day)
-            if cs > end_date:
+        for attempt in range(3):
+            full_list = []
+            for chunk_start_day in range(0, total_days, chunk_size_days):
+                cs = start_date + timedelta(days=chunk_start_day)
+                if cs > end_date:
+                    break
+                ce = min(end_date, cs + timedelta(days=chunk_size_days - 1))
+                chunk_result = await extract_availability_chunk(note, cs, ce)
+                full_list.extend(chunk_result)
+            if len(full_list) == total_shifts:
                 break
-            ce = min(end_date, cs + timedelta(days=chunk_size_days - 1))
-            chunk_result = await extract_availability_chunk(note, cs, ce)
-            full_list.extend(chunk_result)
-
-        if len(full_list) != total_shifts:
-            raise ValueError(f"Agent failed to produce correct shift-level availability list length: {len(full_list)} vs {total_shifts}")
+            if attempt == 2:
+                raise ValueError(f"Agent failed 3 times to produce correct shift-level availability list length: {len(full_list)} vs {total_shifts}")
         availability_matrix.append(full_list)
 
-        # Extract requested shifts
         requested_list = await extract_requested_shifts(note, schedule_entries)
         for r in requested_list:
             req_date = datetime.strptime(r["date"], "%Y-%m-%d").date()
