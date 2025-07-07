@@ -46,17 +46,18 @@ Radiologist-Scheduling-Agent/
 
 ## 2 System overview
 
-Stage	Principal modules	Summary
-Data ingestion	home.py	User uploads two CSV files: (i) shift template and (ii) radiologist profiles.
-Natural-language parsing	utils/parse/parse_AI.py, parse_requests.py	OpenAI agents derive availability matrices, explicit shift requests, monthly-cap amendments, and any direct “edit” operations (add / remove / swap).
-Initial optimisation	utils/schedule/scheduler.py	Builds a CP-SAT model with one Boolean variable per (employee, shift). Hard constraints: availability, single-assignment per slot, monthly caps. Soft objectives defined in objective.py.
-Post-edit processing	utils/schedule/alterations.py	Direct edits are applied immediately; otherwise a full re-optimisation is invoked.
-Presentation layer	home.py	Calendar and legend are rendered; uncovered shifts can be exported for “moonlighting” coverage.
+| **Stage** | **Principal module(s)** | **Summary** |
+|-----------|-------------------------|-------------|
+| **Data ingestion** | `home.py` | User uploads two CSV files: the shift template and the radiologist-profile sheet. |
+| **Natural-language parsing** | `utils/parse/parse_AI.py`, `parse_requests.py` | OpenAI agents convert free-text notes into structured data: availability matrices, explicit shift requests, monthly-cap changes, and direct “edit” actions (add / remove / swap). |
+| **Initial optimisation** | `utils/schedule/scheduler.py` | Builds a CP-SAT model with one Boolean variable per (employee, shift). Enforces hard constraints (availability, single-assignment per slot, monthly caps) and minimises soft penalties defined in `objective.py`. |
+| **Post-edit processing** | `utils/schedule/alterations.py` | Applies direct edits immediately; if no edits are specified, triggers a complete re-optimisation. |
+| **Presentation layer** | `home.py` | Renders the calendar and colour legend; uncovered shifts can be exported for “moonlighting” coverage. |
 
 Error-handling safeguards
 	•	Each LLM extractor retries up to three attempts before raising a ValueError.
-	•	Malformed keys in requested_shift_map are logged and discarded.
-	•	Unknown radiologists referenced in a note are added automatically with a default monthly cap (five shifts) and full availability.
+	•	Unknown radiologists referenced in a note are added automatically with a default monthly cap (five shifts) and full availability
+		unless otherwise specified.
 
 ⸻
 
