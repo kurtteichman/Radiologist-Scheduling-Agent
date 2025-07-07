@@ -73,35 +73,42 @@ Radiologist-Scheduling-Agent/
 
 <pre lang="markdown">
 
-<code>```bash
+<code>
 git clone https://github.com/&lt;your-user&gt;/Radiologist-Scheduling-Agent.git
 cd Radiologist-Scheduling-Agent
 
 python3 -m venv .venv
 source .venv/bin/activate
 
-# If using a requirements.txt file:
-pip install -r requirements.txt
-
-# OR manually install necessary packages:
+# Install necessary packages:
 pip install openai google-ortools streamlit pandas
 
 # Set your OpenAI API key
 export OPENAI_API_KEY=&lt;your-key&gt;
-```</code>
+</code>
 
 </pre>
 
 
 ### 3.2 Running the automated tests
+<pre lang="markdown">
 
+<code>
 python3 -m tests.test_parse_requests
 python3 -m tests.schedule-test
 python3 -m tests.test_alterations
+</code>
+
+</pre>
 
 ### 3.3 Starting the application
+<pre lang="markdown">
 
+<code>
 streamlit run ./home.py
+</code>
+
+</pre>
 
 The application should open automatically; if not, open the URL shown in the terminal.
 
