@@ -1,9 +1,8 @@
 # Radiologist-Scheduling-Agent
+A web application that converts free-form natural-language notes from radiologists into a balanced on-call rotation. Two core components underpin the system:
 
-A web application that converts free-form natural-language notes from radiologists into a balanced on-call rota.
-Two core components underpin the system:
-	1.	Large-language-model (LLM) agents (OpenAI GPT models) — transform narrative notes into structured, machine-readable constraints;
-	2.	CP-SAT optimisation model (Google OR-Tools) — produces a schedule that satisfies all hard rules and minimises specified soft penalties.
+1. **Large-language-model (LLM) agents** (OpenAI GPT models) — transform narrative notes into structured, machine-readable constraints.  
+2. **CP-SAT optimisation model** (Google OR-Tools) — produces a schedule that satisfies all hard rules and minimises specified soft penalties.
 
 ⸻
 
@@ -112,13 +111,13 @@ streamlit run ./home.py
 
 The application should open automatically; if not, open the URL shown in the terminal.
 
-For an instant trial, select `data/radiologist_profiles.csv` and `data/shift_data_single_month.csv` when uploading files.
+Select `data/radiologist_profiles.csv` and `data/shift_data_single_month.csv` when uploading files for a functioning example.
 
 ⸻
 
 ## 4 Operating the application
 ### 1.	Step 1 — Upload input files
-Scheduling CSV (columns Date, Shift with values L1/L2/L3) and Radiologist profile CSV (columns Radiologist_ID, Notes).
+Scheduling CSV (columns: Date, Shift with values L1/L2/L3) and Radiologist profile CSV (columns: Radiologist_ID, Notes).
 Click `Create Schedule` to generate the initial calendar.
 ### 2.	Moonlighting export (optional)
 If any shifts remain uncovered, a `Moonlighting Shifts Export` button appears; click to download a CSV of open slots.
@@ -145,7 +144,7 @@ After submission, the calendar, legend, and all underlying data structures refre
 
 ## 6 Dependencies
 
-The project targets Python 3.9 + and relies on the following core packages:
+The project runs using Python 3.9 + and relies on the following core packages:
 
 | Package         | Purpose                                              |
 |----------------|------------------------------------------------------|
