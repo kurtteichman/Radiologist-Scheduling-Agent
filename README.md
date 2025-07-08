@@ -73,7 +73,7 @@ Radiologist-Scheduling-Agent/
 <pre lang="markdown">
 
 <code>
-git clone https://github.com/&lt;your-user&gt;/Radiologist-Scheduling-Agent.git
+git clone https://github.com/rlacs235711/Radiologist-Scheduling-Agent.git
 cd Radiologist-Scheduling-Agent
 
 python3 -m venv .venv
