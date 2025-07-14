@@ -12,6 +12,19 @@ from utils.parse.parse_requests import process_note_against_schedule
 import asyncio
 import calendar
 from io import StringIO  # ✅ for in-memory CSV
+import pickle
+import os
+
+saving_values = False
+using_preset = True
+
+if not saving_values and using_preset:
+    if "final_schedule" not in st.session_state and os.path.exists("preload_state.pkl"):
+        with open("preload_state.pkl", "rb") as f:
+            preload = pickle.load(f)
+            for k, v in preload.items():
+                st.session_state[k] = v
+
 
 def render_calendar():
     st.subheader("Generated Calendar")
@@ -165,6 +178,25 @@ if scheduling_csv and radiologist_csv:
             st.session_state["moon_ready"] = True
         else:
             st.session_state["moon_ready"] = False
+        if saving_values:
+            snapshot = {
+                "calendar_html_blocks": st.session_state["calendar_html_blocks"],
+                "color_map": st.session_state["color_map"],
+                "assignments_by_emp": st.session_state["assignments_by_emp"],
+                "final_schedule": st.session_state["final_schedule"],
+                "schedule_entries": st.session_state["schedule_entries"],
+                "employee_names": st.session_state["employee_names"],
+                "monthly_caps": st.session_state["monthly_caps"],
+                "availability_matrix": st.session_state["availability_matrix"],
+                "requested_shift_map": st.session_state["requested_shift_map"],
+                "start_date": st.session_state["start_date"],
+                "moon_ready": st.session_state["moon_ready"],
+                "moon_csv": st.session_state["moon_csv"]
+            }
+
+            with open("preload_state.pkl", "wb") as f:
+                pickle.dump(snapshot, f)
+        
 
 # 🔁 Re-render saved output after rerun (e.g. after clicking download)
 if "calendar_html_blocks" in st.session_state:
